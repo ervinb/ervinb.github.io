@@ -194,9 +194,10 @@ header.main-header, footer.main-footer {
 
 header.main-header {
   color: $base-00;
-  border-top: 5px $base-00 solid;
+  border-top: 5px $base-01 solid;
 
   h1, h2 { text-align: center; color: inherit;}
+  h3 { text-align: center; color: #999;}
   a { 
     color: inherit;
     &:hover, &:active, &:focus {
@@ -307,6 +308,7 @@ footer.main-footer {
   li a.twitter {
     background-position: 0 0;
       &:hover {
+        background-color: #55ACEE;
         background-position: 0 -32px;
     } 
   }
@@ -314,6 +316,7 @@ footer.main-footer {
   li a.github {
     background-position: -32px 0;
     &:hover {
+      background-color: black;
       background-position: -32px -32px;
     }
   }
@@ -321,6 +324,7 @@ footer.main-footer {
   li a.facebook {
     background-position: -64px 0;
     &:hover {
+      background-color: #3A5795;
       background-position: -64px -32px;
     }
   }
@@ -335,6 +339,7 @@ footer.main-footer {
   li a.google {
     background-position: -128px 0;
     &:hover {
+      background-color: #d34836;
       background-position: -128px -32px;
     }
   }
