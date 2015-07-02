@@ -65,5 +65,5 @@ GRUB_LINUX_CMD_LINE="iommu=soft"
 To let GRUB know about this change for future boots, execute `sudo update-grub`.
 Keep in mind that IOMMU is still enabled in the BIOS.
 
-You should also try this approach if your having freezing issues with Ubuntu.
+You should also try this approach if you're having freezing issues with Ubuntu.
 Now let's open that champaign!
