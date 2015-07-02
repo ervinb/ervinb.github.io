@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 Hi, I'm Ervin a dev/ops guy working on [SemaphoreCI][semaphore], a continuous
-integration and deployment service, developed by the fine gentleman at
+integration and deployment service, developed by the fine gentleman over at
 [Rendered Text][rt].
 
 I'm mostly responsible for managing and development of the system which uses
@@ -27,7 +27,7 @@ some of the tips here will save you from a few hair-pulling sessions.
 ### Contact me
 
 Find me on [Github][github] / [Twitter][Twitter] or shoot me a message to
-[ervin@renderedtext.com](ervin@renderedtext.com).
+[ervin@renderedtext.com][email].
 
 [semaphore]: https://semaphoreci.com
 [rt]:http://renderedtext.com/
@@ -37,3 +37,4 @@ Find me on [Github][github] / [Twitter][Twitter] or shoot me a message to
 [semaphore-community]: https://semaphoreci.com/community/authors/ervinb
 [github]: https://github.com/ervinb
 [twitter]: https://twitter.com/baer
+[email]: mailto:ervin@renderedtext.com
