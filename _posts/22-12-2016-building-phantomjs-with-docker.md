@@ -21,7 +21,7 @@ Here's the "I'm-being-chased-by-a-wolfpack" version:
 $ docker build -t phantomjs --build-arg TAG=2.1.1 .
 # reload your shotgun, twice
 # (and get the shells from the factory)
-$ docker run --volume phantom-out -td
+$ docker run --volume phantom-out -d
 $ ./phantom-out/phantomjs --version
 ```
 
@@ -30,8 +30,10 @@ and the resulting image is almost 3GB in size.
 
 ## Step-by-step
 
-The preassumption is that you have Docker on your host. If that's not the case,
-follow [this guide](https://docs.docker.com/engine/installation/).
+The preassumption is that you have Docker installed on your host,
+and a basic knowledge of it along side -- to go with it. If that's not the case,
+follow [this guide](https://docs.docker.com/engine/installation/) for the installtion,
+and explore their docs a bit for the rest.
 
 Now, we can write the "recipe" for the build environment: a [Dockerfile](https://docs.docker.com/engine/reference/builder/).
 This will define the steps needed for baking an image, capable of producing a PhantomJS
@@ -39,11 +41,12 @@ binary. It looks something like this:
 
 ```sh
 FROM ubuntu:14.04
-ARG CACHE_BUSTER=no
+ARG DEPENDENCY_BUSTER=no
+ARG REPO_BUSTER=no
 ARG REPO_URL=git://github.com/ariya/phantomjs.git
 ARG SRC_DIR=phantomjs-src
 ARG TAG=2.1.1
-RUN echo $CACHE_BUSTER > /dev/null
+RUN echo $DEPENDENCY_BUSTER > /dev/null
 RUN apt-get update -qq &&              \
     apt-get install -y build-essential \
     g++ flex bison gperf ruby perl     \
@@ -51,6 +54,7 @@ RUN apt-get update -qq &&              \
     libicu-dev libfreetype6 libssl-dev \
     libpng-dev libjpeg-dev python      \
     libx11-dev libxext-dev git
+RUN echo $REPO_BUSTER > /dev/null
 RUN git clone $REPO_URL $SRC_DIR
 WORKDIR $SRC_DIR
 # script this
@@ -70,25 +74,37 @@ this happens only when the command string changes. In other words, executing
 `docker build .` twice, with a Dockerfile which has `apt-get update`, will run the
 update the first time, but it will reuse the cached layer on the second run.
 
-Armed with this knowledge, we can understand the `echo $CACHE_BUSTER` command
-before setting up the repository. It "busts" the cache, which makes sure that
-`apt-get install` isn't reused. Dependencies are a subject to change, so it's nice
-to have an option to reinstall the on-demand. When we provide a random
-value for `$CACHE_BUSTER` as a build-arg, the command string will change, thus
+Armed with this knowledge, we can understand the `echo $DEPENDENCY_BUSTER` and
+`echo $REPO_BUSTER` instructions. They serve to "bust" the cache, which makes sure that
+`apt-get install` isn't reused or the repository is fresh.
+Dependencies are a subject to change, so it's nice to have an option to reinstall the on-demand.
+It goes the same for large, long running repository fetches. When we provide a random
+value these variables as a Docker `build-arg`, the command strings will change, thus
 busting the cache.
 If you're using `bash`, you can use the built-in `$RANDOM` variable to pass a
 random number like so:
 
 ```
-$ docker build --build-arg CACHE_BUSTER=$RANDOM .
+$ docker build --build-arg DEPENDENCY_BUSTER=$RANDOM .
 ```
 
-This assures that the anything below `echo` will not use the layer cache. When
-passing a value for `$CACHE_BUSTER` we get a fresh set of build dependencies,
+Anything below `RUN echo $DEPENDENCY_BUSTER` will not use the layer cache. When
+passing a value for `$DEPENDENCY_BUSTER` we get a fresh set of build dependencies,
 otherwise we use the ones stored in the cached layer.
 
-In a nutshell, to have effective Docker layer caching, moving parts go to the bottom,
-static files and dependencies to on top.
+This was an example to show you how you can thoughtfully re-use your layers. In a nutshell,
+to have effective Docker layer caching, moving parts go to the bottom, static files and
+dependencies go on top. Plus, you have an option to set up markers at specific stages,
+for smart layer re-use.
+
+## Running the image
+
+Once we have baked the image, the last step to is to run it.
+In the Dockerfile above, we have a [CMD](https://docs.docker.com/engine/reference/builder/#/cmd)
+ instruction call, meant to execute the compilation process.
+
+# info about cmd versions exec, shell, param
+# use env vanrs parsing for demo
 
  # extract data from container
  # the run command will mount a new dir (not pre-created) and pooplate it after build
