@@ -1,7 +1,7 @@
 ---
 ---
 
-// Import reset 
+// Import reset
 @import "partials/reset";
 
 // Import colors, fonts etc...
@@ -13,11 +13,11 @@
 // Import layout mixin
 @import "partials/layout";
 
-// Import syntax 
+// Import syntax
 @import "partials/syntax";
 
 
-/* -------------------------------- 
+/* --------------------------------
 
  Primary style
 
@@ -66,8 +66,8 @@ body {
 
 --------------------------------- */
 
-h1, h2, h3, h4, h5, h6 { 
-  line-height: 1.6;
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
 }
 
 h1 {
@@ -157,10 +157,10 @@ em, i { font-style: italic; }
 
 --------------------------------- */
 
-// default 
+// default
 
 a.default-anchor {
-  
+
   text-decoration: none;
   border-bottom: 1px solid transparent;
   color: $base-08;
@@ -187,7 +187,7 @@ header.main-header, footer.main-footer {
   p,address {
     @include font-size(12px);
     @include MQ(M) {
-      @include font-size(14px);        
+      @include font-size(14px);
     }
   }
 }
@@ -198,7 +198,7 @@ header.main-header {
 
   h1, h2 { text-align: center; color: inherit;}
   h3 { text-align: center; color: #999;}
-  a { 
+  a {
     color: inherit;
     &:hover, &:active, &:focus {
       border-bottom-color: transparent;
@@ -210,7 +210,7 @@ header.main-header {
     text-align: center;
     padding: 15px;
   }
-  ul li {       
+  ul li {
     display: inline-block;
     position:relative;
     color: $base-08;
@@ -222,7 +222,7 @@ header.main-header {
     width: 15px;
   }
 
-  ul li a { 
+  ul li a {
     display:inline-block;
     color: inherit;
     border-bottom: 2px transparent solid;
@@ -265,7 +265,7 @@ footer.main-footer {
       height: 2px;
       background: $base-07;
       overflow: hidden;
-  } 
+  }
 
   ul.menu {
     padding: 0 0 1em 0;
@@ -273,9 +273,9 @@ footer.main-footer {
       @include font-size(12px);
       line-height: 1.6;
       display: inline;
-      padding-right: 10px;        
+      padding-right: 10px;
       @include MQ(M) {
-        @include font-size(16px);          
+        @include font-size(16px);
       }
     }
   }
@@ -287,7 +287,7 @@ footer.main-footer {
  ul.social-media {
   text-align:left;
   padding: 0 0 10px 0;
-  li { 
+  li {
     display:inline-block;
   }
   li > a {
@@ -304,13 +304,13 @@ footer.main-footer {
       background-color: $base-08;
     }
   }
-    
+
   li a.twitter {
     background-position: 0 0;
       &:hover {
         background-color: #55ACEE;
         background-position: 0 -32px;
-    } 
+    }
   }
 
   li a.github {
@@ -375,14 +375,14 @@ div.page-content {
   @include MQ(M) {
     min-height: 400px;
   }
-}    
+}
 
 div.page-content {
-  ul {       
+  ul {
     padding: 0 0 1em 0;
     li {
       @include font-size(14px);
-      color: $color-2; 
+      color: $color-2;
       line-height: 1.6;
       background: url(./images/bullet.svg);
       background-repeat: no-repeat;
@@ -390,22 +390,22 @@ div.page-content {
       padding: 0 0 5px 15px;
       margin-left: 0;
     }
-    @include MQ(M){        
-      li {         
-        @include font-size(16px);  
+    @include MQ(M){
+      li {
+        @include font-size(16px);
         line-height: 1.5;
-        background-position: 0 7px; 
+        background-position: 0 7px;
       }
     }
   }
-  ol { 
+  ol {
     @include font-size(12px);
     // padding-top: 1em;
     padding-bottom: 1em;
     list-style: decimal;
     margin-left: 0;
     li {
-      color: $color-2; 
+      color: $color-2;
       line-height: 1.6;
       padding: 0 0 5px 0px;
       margin-left: 2em;
@@ -413,9 +413,9 @@ div.page-content {
     }
     @include MQ(M){
       @include font-size(16px);
-      li { 
+      li {
         line-height: 1.5;
-        background-position: 0 7px; 
+        background-position: 0 7px;
       }
     }
   }
@@ -423,10 +423,10 @@ div.page-content {
   dl {
     padding-bottom: 1em;
     dt, dd {
-      @include font-size(12px);  
-      line-height: 1.5;        
+      @include font-size(12px);
+      line-height: 1.5;
     }
-    
+
     dt {
       font-weight: bold;
       padding-bottom: 5px;
@@ -441,23 +441,23 @@ div.page-content {
       padding-left: 10px;
     }
 
-    @include MQ(M) {        
+    @include MQ(M) {
       dt, dd {
         @include font-size(16px);
-        line-height: 1.6;        
+        line-height: 1.6;
       }
     }
   }
-  
-  img { 
+
+  img {
     padding: 1em 0;
   }
 
   p {
-    margin-bottom: 1em;      
+    margin-bottom: 1em;
   }
 
-  h1, h2, h3, h4, h5, h6 { 
+  h1, h2, h3, h4, h5, h6 {
     padding-bottom: 5px;
   }
 }
@@ -465,19 +465,19 @@ div.page-content {
 .no-svg div.page-content ul li {
   background: url(./images/bullet.png);
   @include font-size(13px);
-  color: $color-2; 
+  color: $color-2;
   line-height: 1.6;
   background-repeat: no-repeat;
   background-position: 0 6px;
   padding: 0 0 5px 15px;
   margin-left: 0;
-} 
+}
 
 // Theme base 01
 body.theme-base-01 {
-  
+
   a {
-    @extend .default-anchor;   
+    @extend .default-anchor;
   }
 
   footer.main-footer {
@@ -487,7 +487,7 @@ body.theme-base-01 {
 
   header.main-header {
     color: $base-01;
-    ul li { 
+    ul li {
       color: $base-08;
     }
   }
@@ -505,7 +505,7 @@ body.theme-base-01 {
 
 --------------------------------- */
 
-header.main-header { 
+header.main-header {
   padding: 1em 0;
   @include MQ(M) { padding: 2em 0; }
 }
@@ -548,7 +548,7 @@ Code snippets
 code, pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
-code {  
+code {
   padding: .25em .5em;
   font-size: 85%;
   color: $base-08;
@@ -622,7 +622,7 @@ Post styles
 div.posts {
 
   .div.post {
-    
+
   }
 }
 div.post {
@@ -631,7 +631,7 @@ div.post {
   border-bottom: 1px $base-05 solid;
   @include MQ(M) {
 
-    padding-bottom: 2em;  
+    padding-bottom: 2em;
   }
 
   &:last-child {
@@ -694,7 +694,7 @@ p.post-meta {
 
 --------------------------------- */
 .post-footer {
-  
+
   border-top: 1px solid $base-05;
   border-bottom: 1px solid $base-05;
   height: 40px;
@@ -702,11 +702,11 @@ p.post-meta {
   width: 100%;
   position: relative;
 
-  @include MQ(M) {    
+  @include MQ(M) {
     height: 80px;
   }
 
-  .column-1, .column-2, .column-3, .column-full {    
+  .column-1, .column-2, .column-3, .column-full {
     padding-top: 10px;
     @include MQ(M) {
       padding-top: 30px;
@@ -715,7 +715,7 @@ p.post-meta {
     a,span {
       @include font-size(12px);
       @include MQ(M) {
-        @include font-size(16px);        
+        @include font-size(16px);
       }
     }
   }

@@ -151,7 +151,7 @@ $ docker run --rm -ti --volume $(pwd)/trunk-$(date +%s):/phantomjs-src/bin phant
 We explored a way to make isolated, disposable build environments, and our toe touched the
 waters of Docker layer caching as well.
 
-The post was aimed at PhantomJS, but as you can image, this approach can be used
+The post was aimed at PhantomJS, but as you can imagine, this approach can be used
 for other purposes as well. Instead of a single `CMD` command, you can use complex
 shell scripts which give you great powers.
 
