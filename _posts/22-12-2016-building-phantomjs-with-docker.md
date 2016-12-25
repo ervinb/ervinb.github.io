@@ -4,16 +4,25 @@ title: Portable build environments with Docker
 tags: phantomjs docker linux
 ---
 
-Docker is a great asset for creating ephemeral envrionments. This is especially useful in our case, where
-a lot of build dependecies have to be pre-installed, before hitting the switch. We can create various
-build environments, having vastly different packages and having a tidy host too.
+Chances are, when you want to compile something from source, you will need to
+install an exotic dependency or two on your box beforehand. Do this enough times
+and your screams won't be able to penetrate the software bloat you built.
 
-PhantomJS is a great open source effort, but their hard work rarely gets a release in a timely manner. Even if the fix
-you're looking for is merged, there's a very good chance that there is no binary available for download.
+Docker's great isolation and flexibilty proved to be a great asset for building
+custom build environments: sandboxes with vastly different libraries, specialized
+for the current job at hand.
+
+In this post, we will go through the process of creating one such sandbox, specialized
+for building a popular headless browser. PhantomJS is a great open source effort,
+but their hard work rarely gets a release in a timely manner. Even if the fix
+you're looking for is merged, there's a very good chance that no binary is available
+for download.
 
 Compiling from source to the rescue!
 
-Here's the "I'm-being-chased-by-a-wolfpack" version:
+## Run!
+
+Here's the "I'm being chased by a wolfpack!" version:
 
 ```sh
 # optional build-arg for specifying which code revision
@@ -30,10 +39,12 @@ $ ./trunk/phantomjs --version
 This ran for 43 minutes, in a Vagrant box with 3 maxed out vCores and 4GB's of memory,
 and the resulting image is almost 3GB in size.
 
+If you're interested in the details, do continue below.
+
 ## Setting up the stage
 
 The preassumption is that you have Docker installed on your host,
-and a basic knowledge of it along side -- to go with it. If that's not the case,
+and some basic Docker knowledge to go with it. If that's not the case,
 follow [this guide](https://docs.docker.com/engine/installation/) for the installtion,
 and explore their docs a bit for the rest.
 
