@@ -85,7 +85,7 @@ Docker images from zero can be cumbersome as well.
 
 The structure and the composition of the commands are fairly important. They're
 constructed in such a way that the cache can be utilized for parts which don't change often.
-Each line in `Dockerfile` creates it's own [layer](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/),
+Each line in `Dockerfile` creates its own [layer](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/),
 which can be then reused in subsequent runs, when no changes are detected. In the case of [RUN](https://docs.docker.com/engine/reference/builder/#/run),
 this happens only when the command string changes. In other words, executing
 `docker build .` twice, with a `Dockerfile` which has `apt-get update`, will run the
