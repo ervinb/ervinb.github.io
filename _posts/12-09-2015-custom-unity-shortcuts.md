@@ -136,8 +136,8 @@ Exec=rhythmbox-client --previous
 #### Our second and third actions
 
 When you hear an awesome song for the first time, you might want to throw
-a bunch of starts at it so having an action for that may be useful. Create
-a new action for rating the current song. Heck let's add another action,
+a bunch of stars at it, so having an action for that may be useful. Create
+a new action for rating the current song. Heck, let's add another action,
 which will trigger a notification with the name of the currently playing track.
 
 {% highlight bash %}
