@@ -26,7 +26,7 @@ That's odd. It's there, but it doesn't seem to be yours. It's left there by
 `root`, the Rock Tamer, and only he can decide its fate.
 
 ```
-# bash -c "echo 'You stay here' > /home/user/shoe/little-rock"
+# bash -c "echo 'You stay here' > /home/user/left-shoe/little-rock"
 # chmod 0000 /home/user/left-shoe/little-rock
 ```
 
