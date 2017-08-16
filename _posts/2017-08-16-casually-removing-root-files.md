@@ -26,7 +26,7 @@ That's odd. It's there, but it doesn't seem to be yours. It's left there by
 `root`, the Rock Tamer, and only he can decide its fate.
 
 ```
-# bash -c "echo 'You stay here' > /home/user/left-shoe/little-rock"
+# bash -c "echo 'You stay here' > /home/user/shoe/little-rock"
 # chmod 0000 /home/user/left-shoe/little-rock
 ```
 
@@ -49,7 +49,7 @@ on it (`--- --- ---`). No reads, no writes, no throwing by anyone (owner, group,
 
 ## The catch
 
-What happened is, is that the Rock Tamer forgot that you are even more powerful
+What happened is, the Rock Tamer forgot that you are even more powerful
 than him, when you're at `$HOME`. Let's see why.
 
 To be able to do anything with a file, the first step is to look it up in its
