@@ -1,4 +1,8 @@
-# Casually removing root files
+---
+layout: post
+title: Casually removing root files
+tags: linux tips
+---
 
 You're walking at `$HOME`, minding your own business.
 
