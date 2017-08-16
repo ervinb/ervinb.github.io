@@ -18,7 +18,7 @@ But something is bothering your feet. It's like if a little rock has fallen into
 You take it off, to see what's going on.
 
 ```
-$ ls -lah ./left-shoe/little-rock
+$ ls -lah ./left-shoe
 ---------- 1 root root 4 May 30 13:20 little-rock
 ```
 
@@ -71,7 +71,7 @@ The `$HOME` directory naturally fulfills both of these requirements from the use
 If the Rock Tamer, really didn't want anyone to mess around with his rocks, he would've done:
 
 ```
-$ chattr +i /home/user/left-shoe/little-rock
+# chattr +i /home/user/left-shoe/little-rock
 ```
 
 This operation makes the file immutable, which among other things, prevents its removal.
