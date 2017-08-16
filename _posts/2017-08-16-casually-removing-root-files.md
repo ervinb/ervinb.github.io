@@ -52,10 +52,11 @@ on it (`--- --- ---`). No reads, no writes, no throwing by anyone (owner, group,
 What happened is, is that the Rock Tamer forgot that you are even more powerful
 than him, when you're at `$HOME`. Let's see why.
 
-To be able to do anything with a file, the first step is to look it up. Listing a directory's
-contents is controlled by the execute flag. If a user has execute permissions on a directory,
-he can see what's inside it. Also, the execute flag gives access to the file's
-`inode`, which is crucial in this context, as the removal process [unlinks](https://linux.die.net/man/2/unlinkat) the file.
+To be able to do anything with a file, the first step is to look it up in its
+directory. Listing a directory's contents is controlled by the execute flag. If
+a user has execute permissions on a directory, he can see what's inside it. Also,
+the execute flag on the directory gives access to its files' `inode`s, which is
+crucial in this context, as the removal process [unlinks](https://linux.die.net/man/2/unlinkat) the file.
 
 Next, the removing part. Renaming or removing a file doesn't involve the `write()` system call.
 Practically, we don't need any permissions to remove the file, nor do we care
