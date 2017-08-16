@@ -44,7 +44,7 @@ You look down at your shaking hands, trying to figure out if this is the real wo
 It is. You did it. Without the Rock Tamer. But how?
 
 The little rock in your shoe had absolutely no idea what's coming. As seen from
-it's incarnation, nobody had [any permissions](http://linuxcommand.org/lts0070.php)
+it's incarnation, nobody had [any permissions](http://linuxcommand.org/lc3_lts0090.php)
 on it (`--- --- ---`). No reads, no writes, no throwing by anyone (owner, group, others).
 
 ## The catch
