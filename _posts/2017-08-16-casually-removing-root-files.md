@@ -1,12 +1,12 @@
 ---
-layout: post
+layout: article
 title: Casually removing root files
 tags: linux tips
 ---
 
 You're walking at `$HOME`, minding your own business.
 
-```
+```ruby
 $ whoami
 > user
 

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title: Fixing IOMMU issues on Ubuntu 14.04 Trusty
 published: true
 tags: iommu linux ubuntu trusty troubleshooting amd
