@@ -2,6 +2,7 @@
 layout: article
 title: Troubleshooting Gigabyte GA-970A-DS3P BIOS freeze
 tags: bios troubleshooting freeze hangup bios setup
+key: bios-freeze
 ---
 
 This one started out as a nice morning surprise. A bad habit of mine is

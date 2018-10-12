@@ -2,6 +2,7 @@
 layout: article
 title: Prevent systemd installation on Ubuntu 14.04 and other Debian based distros
 tags: linux systemd tips
+key: systemd-block
 ---
 
 "If the mountain won't come to Muhammad then Muhammad must go to the mountain."

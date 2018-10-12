@@ -2,6 +2,7 @@
 layout: article
 title: Portable build environments with Docker
 tags: phantomjs docker linux compiling
+key: portable-docker-env
 ---
 
 Chances are, when you want to compile something from source, you will need to

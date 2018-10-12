@@ -1,7 +1,6 @@
 ---
 layout: article
 title: About me
-key: page-about
 ---
 
 Hi, I'm Ervin a dev/ops guy working on [SemaphoreCI][semaphore], a continuous

@@ -35,7 +35,7 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 author:
   type      : # "person" (default), "organization"
   name      : Ervin Barta
-  url       :
+  url       : http://ervinb.github.io
   avatar    : https://avatars0.githubusercontent.com/u/2212814?s=400&v=4
   bio       :  
   email     :
@@ -109,7 +109,7 @@ comments:
 
   ## Disqus
   disqus:
-    shortname: # the Disqus shortname for the site
+    shortname: ervinb # the Disqus shortname for the site
 
   ## Gitalk
   # please refer to https://github.com/gitalk/gitalk for more info.

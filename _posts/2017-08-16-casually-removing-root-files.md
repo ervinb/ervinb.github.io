@@ -2,6 +2,7 @@
 layout: article
 title: Casually removing root files
 tags: linux tips
+key: removing-root-files
 ---
 
 You're walking at `$HOME`, minding your own business.

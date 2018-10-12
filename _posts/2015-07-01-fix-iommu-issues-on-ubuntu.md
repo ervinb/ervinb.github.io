@@ -2,6 +2,7 @@
 layout: article
 title: Fixing IOMMU issues on Ubuntu 14.04 Trusty
 tags: iommu linux ubuntu trusty troubleshooting amd
+key: iommu-fix
 ---
 
 Installation of Ubuntu 14.04 (or any other distro really) on a configuration

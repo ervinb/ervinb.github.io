@@ -2,6 +2,7 @@
 layout: article
 title: How to create custom Unity shortcuts
 tags: unity linux ubuntu customization
+key: unity-icons
 ---
 
 Application shortcuts can be added to Unity by creating special `.desktop` files
