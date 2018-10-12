@@ -1,7 +1,6 @@
 ---
-layout: post
+layout: article
 title: How to create custom Unity shortcuts
-published: true
 tags: unity linux ubuntu customization
 ---
 
@@ -58,8 +57,7 @@ on your machine. Open up a text editor and let's see what we got.
 
 `sudo gedit /usr/share/applications/rhythmbox.desktop`
 
-{% highlight bash %}
-
+```shell
 [Desktop Entry]
 Name=Rhythmbox
 GenericName=Music Player
@@ -98,8 +96,7 @@ Exec=rhythmbox-client --next
 [Desktop Action Previous]
 Name=Previous
 Exec=rhythmbox-client --previous           
-
-{% endhighlight %}
+```
 
 There is a surprising amount of information a shortcut can hold isn't it?
 The most interesting part for us is the `Actions` key and the definitions
@@ -115,8 +112,7 @@ remove them from the list of actions in the `Actions` key. Next, add our new
 action to the actions list and define the new group. The example below shows only
 the relevant lines.
 
-{% highlight bash %}
-
+```shell
 Actions=iPlayPause;Next;Previous;
 
 [Desktop Action iPlayPause]
@@ -130,8 +126,7 @@ Exec=rhythmbox-client --next
 [Desktop Action Previous]
 Name=Previous
 Exec=rhythmbox-client --previous           
-
-{% endhighlight %}
+```
 
 #### Our second and third actions
 
@@ -140,8 +135,7 @@ a bunch of stars at it, so having an action for that may be useful. Create
 a new action for rating the current song. Heck, let's add another action,
 which will trigger a notification with the name of the currently playing track.
 
-{% highlight bash %}
-
+```shell
 Actions=iPlayPause;Next;Previous;Rate;NowPlaying;
 
 [Desktop Action iPlayPause]
@@ -164,8 +158,7 @@ Exec=sh -c 'rhythmbox-client --set-rating 5'
 Name=Now playing
 Exec=sh -c 'rhythmbox-client --print-playing | xargs -0 -I track notify-send -t
 3 -a Rhythmbox -i rhythmbox track'
-
-{% endhighlight %}
+```
 
 ![Advanced Rhythmbox launcher]({{ site.url }}/assets/img/unity-shortcut-adv.png)
 
