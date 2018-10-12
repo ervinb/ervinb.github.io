@@ -1,7 +1,6 @@
 ---
 layout: article
 title: Fixing IOMMU issues on Ubuntu 14.04 Trusty
-published: true
 tags: iommu linux ubuntu trusty troubleshooting amd
 ---
 
@@ -20,7 +19,7 @@ Once the computer was at the Ubuntu loading screen, I noticed strange HDD
 activity. The activity light was blinking in suspiciously regular periods.
 Not much after this, I was greeted by a lovely message:
 
-```
+```shell
 (initramfs) unable to find a live medium containing a live file system
 ```
 
@@ -66,7 +65,7 @@ This is a fun thing to do, but if you want to make the change permanent,
 you'll have the edit GRUB's configuration file. Run `sudo vi /etc/default/grub`
 and change the option shown below to include `iommu=soft`:
 
-```
+```shell
 GRUB_LINUX_CMD_LINE="iommu=soft"
 ```
 

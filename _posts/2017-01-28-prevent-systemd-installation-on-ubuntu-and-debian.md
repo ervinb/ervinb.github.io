@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title: Prevent systemd installation on Ubuntu 14.04 and other Debian based distros
 tags: linux systemd tips
 ---
@@ -22,7 +22,7 @@ it as an indirect dependency.
 
 Here's how to prevent `systemd` from ruining your party:
 
-```sh
+```shell
 # create an APT config file
 $ sudo vi /etc/apt/preferences.d/systemd
 # paste this snippet and save -- make sure there's no indentation

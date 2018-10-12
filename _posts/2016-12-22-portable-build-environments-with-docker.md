@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title: Portable build environments with Docker
 tags: phantomjs docker linux compiling
 ---
@@ -23,7 +23,7 @@ good chance that no binary is available for download. Compiling from source to t
 
 Here's the "*I'm being chased by a wolfpack!*" version:
 
-```sh
+```shell
 # optional build-arg for specifying which code revision to compile (2.1.1 by default)
 $ git clone https://github.com/ervinb/phantomjs-sandbox.git && cd phantomjs-sandbox
 $ docker build -t phantomjs-sandbox-211 --build-arg TAG=2.1.1 .
@@ -50,7 +50,7 @@ Now, we can write the "recipe" for the build environment: a
 This will define the steps needed for baking an image, capable of producing a PhantomJS
 binary. It looks something like this:
 
-```sh
+```shell
 FROM ubuntu:14.04
 ARG DEPENDENCY_BUSTER
 ARG REPO_BUSTER
@@ -101,7 +101,7 @@ change, thus busting the cache.
 If you're using `bash`, you can use the built-in `$RANDOM` variable to pass a
 random number like so:
 
-```
+```shell
 $ docker build -t phantomjs-sandbox-211 --build-arg DEPENDENCY_BUSTER=$RANDOM .
 ```
 
@@ -123,7 +123,7 @@ instruction call, meant to execute the compilation process when the image is sta
 We use it in the `shell` form. Two additional forms are available, `exec`and `param`,
 about which you can have an interesting read by clicking the link above.
 
-```sh
+```shell
 # --rm will remove the container after the run completes but the phantomjs executable
 # will persist
 $ out_dir="$(pwd)/trunk-$(date +%s)"; docker run --rm --volume $out_dir:/phantomjs-src/bin phantomjs-sandbox
@@ -135,14 +135,14 @@ and map it to `/phantomjs-src/bin` inside the container. Once `python build.py` 
 it will produce an artifact inside the `/phantomjs-src/bin` directory,
 and you'll have a nice `phantomjs` executable waiting for you in the `./trunk` on the host.
 
-```sh
+```shell
 $ ./trunk-1482688158/phantomjs --version
 > 2.1.1
 ```
 
 The image can be explored interactively with:
 
-```sh
+```shell
 $ docker run --rm -ti --volume $(pwd)/trunk-$(date +%s):/phantomjs-src/bin phantomjs-sandbox /bin/bash
 ```
 
