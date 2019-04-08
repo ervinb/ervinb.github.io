@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: articles
 title: Blog archive
 ---
 <div class="page-content wc-container">

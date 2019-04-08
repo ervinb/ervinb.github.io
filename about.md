@@ -1,7 +1,6 @@
 ---
-layout: page
+layout: article
 title: About me
-permalink: /about/
 ---
 
 Hi, I'm Ervin a dev/ops guy working on [SemaphoreCI][semaphore], a continuous

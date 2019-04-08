@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: article
 title: Troubleshooting Gigabyte GA-970A-DS3P BIOS freeze
 tags: bios troubleshooting freeze hangup bios setup
+key: bios-freeze
 ---
 
 This one started out as a nice morning surprise. A bad habit of mine is
@@ -9,7 +10,7 @@ to turn on the computer in the morning, almost while I'm stretching after waking
 
 Not much later, I was greeted with the following message:
 
-```sh
+```
 Reboot and Select proper Boot device or Insert Boot Media in selected Boot device and press a key
 ```
 

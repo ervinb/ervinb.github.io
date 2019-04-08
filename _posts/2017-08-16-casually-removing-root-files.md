@@ -1,12 +1,13 @@
 ---
-layout: post
+layout: article
 title: Casually removing root files
 tags: linux tips
+key: removing-root-files
 ---
 
 You're walking at `$HOME`, minding your own business.
 
-```
+```shell
 $ whoami
 > user
 
@@ -17,7 +18,7 @@ $ pwd
 But something is bothering your feet. It's like if a little rock has fallen into your shoe.
 You take it off, to see what's going on.
 
-```
+```shell
 $ ls -lah ./left-shoe
 ---------- 1 root root 4 May 30 13:20 little-rock
 ```
@@ -25,8 +26,9 @@ $ ls -lah ./left-shoe
 That's odd. It's there, but it doesn't seem to be yours. It's left there by
 `root`, the Rock Tamer, and only he can decide its fate.
 
-```
-# bash -c "echo 'You stay here' > /home/user/shoe/little-rock"
+
+```shell
+# bash -c "echo 'You stay here' > /home/user/left-shoe/little-rock"
 # chmod 0000 /home/user/left-shoe/little-rock
 ```
 
@@ -34,7 +36,7 @@ You reach into your pocket for your phone, to speed dial him with `sudo`. Sudden
 you feel powerful (from watching Gladiator last night), and decide to put back
 the phone, and try your luck.
 
-```
+```shell
 $ rm -f ./left-shoe/little-rock
 $ ls -lah ./left-shoe/little-rock
 ls: cannot access little-rock: No such file or directory
@@ -44,7 +46,7 @@ You look down at your shaking hands, trying to figure out if this is the real wo
 It is. You did it. Without the Rock Tamer. But how?
 
 The little rock in your shoe had absolutely no idea what's coming. As seen from
-it's incarnation, nobody had [any permissions](http://linuxcommand.org/lts0070.php)
+it's incarnation, nobody had [any permissions](http://linuxcommand.org/lc3_lts0090.php)
 on it (`--- --- ---`). No reads, no writes, no throwing by anyone (owner, group, others).
 
 ## The catch
@@ -70,14 +72,14 @@ The `$HOME` directory naturally fulfills both of these requirements from the use
 
 If the Rock Tamer, really didn't want anyone to mess around with his rocks, he would've done:
 
-```
+```shell
 # chattr +i /home/user/left-shoe/little-rock
 ```
 
 This operation makes the file immutable, which among other things, prevents its removal.
 Excerpt from the [man page](https://linux.die.net/man/1/chattr):
 
-```
+```shell
 A file with the 'i' attribute cannot be modified: it cannot be deleted or renamed, no link can be created to this file and no data can be written to the file. Only the superuser or a process possessing the CAP_LINUX_IMMUTABLE capability can set or clear this attribute.
 ```
 
