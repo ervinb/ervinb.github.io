@@ -34,6 +34,6 @@ Now, why would you need this?
 
 If you don't have an index on a date field, but you need to filter out documents with a date boundary. For example:
 - deleting all documents older than 30 days
-- archiving all documents older than 6 months and then removing the data to save MongoDB disk space*
+- archiving all documents older than 6 months and then removing the data to save MongoDB disk space [^1]
 
-* *deleting documents will not free up the disk on the host - Mongo reserves the newly available free space for new documents. Starting from Mongo 3.2, when you [compact a collection](https://dzone.com/articles/reclaiming-disk-space-from-mongodb), then the OS will regain the free space.*
+[^1]: deleting documents will not free up the disk on the host - Mongo reserves the newly available free space for new documents. Starting from Mongo 3.2, when you [compact a collection](https://dzone.com/articles/reclaiming-disk-space-from-mongodb), then the OS will regain the free space.*
