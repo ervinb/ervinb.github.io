@@ -1,7 +1,7 @@
 ---
 layout: article
 title: How to generate a MongoDB ObjectId from a date in Bash
-tags: linux tips, mongo
+tags: linux tips mongo
 key: mongo-objectid
 ---
 
