@@ -6,7 +6,7 @@ key: mongo-objectid
 ---
 
 A little known fact about MongoDB object IDs is that they encode that date when the document was created. This means that
-you don't have to create an index on a date field, as the `_id` field is automatically indexed. Let's do it quick and dirty, sprinkled with some black magic:
+you don't have to create an index on a date field, as the `_id` field is [automatically indexed](https://docs.mongodb.com/manual/indexes/#default-id-index). Let's do it quick and dirty, sprinkled with some black magic:
 
 ```shell
 # 1. get date 3 months ago
