@@ -14,7 +14,7 @@ $ date=$(date --date="3 months ago" +%s)
 
 # 2. generate the ObjectId by converting the date to hex and fill the rest with 0s
 $ echo "$(printf "%x" ${date})0000000000000000"
-> 5ca378720000000000000000
+5ca378720000000000000000
 
 # 3. query the DB for files according to creation date (Atlas > Collection > globus-tracking.actions)
 $ mongo
