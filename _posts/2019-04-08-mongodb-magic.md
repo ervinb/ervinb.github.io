@@ -24,8 +24,7 @@ $ mongo
 
 1. `date` has a [nifty feature](https://ss64.com/bash/date.html), where you can provide a human readable, relative string called a date string, and it will get back to you with the date at that time.
 
-2. Mongo object IDs consist of [12 byte hexadecimal strings](). The first 4 describe the number of seconds since the epoch - the star of our show, the next 5 is a radnom value, and the last 3 bytes is a counter.
-Since only the first 4 bytes are storing the date, we can fill the rest with zeros.
+2. Mongo object IDs consist of [12 byte hexadecimal strings](). The first 4 describe the number of seconds since the epoch - the star of our show, the next 5 is a random value, and the last 3 bytes describe a counter. Since only the first 4 bytes are storing the date, we can fill the rest with zeros.
 
 
     We convert our date (expressed in seconds since the epoch) to Hex, by using the built-in `printf` function and the `%x` (unsigned hexadecimal) [format](https://wiki-dev.bash-hackers.org/commands/builtin/printf#format_strings).
