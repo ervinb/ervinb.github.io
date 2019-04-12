@@ -30,7 +30,7 @@ $ mongo
     We convert our date (expressed in seconds since the epoch) to Hex, by using the built-in `printf` function and the `%x` (unsigned hexadecimal) [format](https://wiki-dev.bash-hackers.org/commands/builtin/printf#format_strings).
 
 3. We use the generated object ID to execute the [gt](https://docs.mongodb.com/manual/reference/operator/query/gt/) (greater than) query, and as a result, we will get all the documents which were created **after** the
-give date.
+given date.
 
 ---
 
