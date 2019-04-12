@@ -5,18 +5,18 @@ tags: linux tips mongo
 key: mongo-objectid
 ---
 
-A little known fact about MongoDB object IDs is that they encode that date when the document was created. This means that
-you don't have to create an index on a date field, as the `_id` field is [automatically indexed](https://docs.mongodb.com/manual/indexes/#default-id-index). Let's do it quick and dirty, sprinkled with some black magic:
+A little known fact about MongoDB object IDs is that they encode the documents creation date. This means that
+you don't have to create an index on a dedicated date field, because the `_id` field is [automatically indexed](https://docs.mongodb.com/manual/indexes/#default-id-index). Let's generate an ObjectId with nothing else than a command line, sprinkled with some black magic:
 
 ```shell
-# 1. get date 3 months ago
+# 1. get the date 3 months ago
 $ date=$(date --date="3 months ago" +%s)
 
 # 2. generate the ObjectId by converting the date to hex and fill the rest with 0s
 $ echo "$(printf "%x" ${date})0000000000000000"
 5ca378720000000000000000
 
-# 3. query the DB for files according to creation date (Atlas > Collection > globus-tracking.actions)
+# 3. query the DB for documents according to creation date
 $ mongo
 >> use mydb
 >> db.collection.find({_id:{$gt: ObjectId("5cab57740000000000000000")}})
