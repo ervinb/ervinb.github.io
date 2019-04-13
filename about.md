@@ -4,7 +4,7 @@ title: About me
 ---
 
 Hi, I'm Ervin Barta, a dev/ops guy who worked on [SemaphoreCI][semaphore], a continuous
-integration and deployment service, developed by the fine gentleman over at
+integration and deployment service, developed by the fine people over at
 [Rendered Text][rt]. 
 
 I was mostly responsible for managing and the development of the system, which uses
