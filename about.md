@@ -36,6 +36,6 @@ Find me on [Github][github] / [Twitter][Twitter] or shoot me a message to
 [kvm]:http://www.linux-kvm.org/page/Main_Page
 [lxc]:https://linuxcontainers.org/
 [docker]:https://www.docker.com/
-[semaphore-community]: https://semaphoreci.com/community/authors/ervinb
+[semaphore-community]: https://semaphoreci.com/author/ervin
 [github]: https://github.com/ervinb
 [twitter]: https://twitter.com/baer
