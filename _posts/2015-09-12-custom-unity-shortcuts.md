@@ -45,7 +45,7 @@ This line gets executed when the shortcut is clicked.
 After saving the file to `/usr/share/applications/android-studio.desktop`,
 the shortcut should appear in Dash and it can be added to Unity's launcher.
 
-![Android Studio launcher]({{ site.url }}/assets/img/unity-shortcut-as-added.png)
+![Android Studio launcher]({{ site.url }}/assets/images/unity-shortcut-as-added.png)
 
 ## Advanced application shortcuts
 
@@ -161,7 +161,7 @@ Exec=sh -c 'rhythmbox-client --print-playing | xargs -0 -I track notify-send -t
 3 -a Rhythmbox -i rhythmbox track'
 ```
 
-![Advanced Rhythmbox launcher]({{ site.url }}/assets/img/unity-shortcut-adv.png)
+![Advanced Rhythmbox launcher]({{ site.url }}/assets/images/unity-shortcut-adv.png)
 
 To list all the available Rhytmbox controls, run `rhythmbox-client --help` in
 your terminal.
