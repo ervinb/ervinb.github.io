@@ -44,9 +44,9 @@ We don't need any fancy formula, because everything is hardcoded into programmin
 The "get what we need" is where it gets interesting. Let's dive into the internals of Go.
 
 I will break down the code examples as much as I can, to assure a firm base for understanding the implementation. This will
-include some Go and general programming concepts. Let's see how `isUpcase()` works under the hood.
+include some Go and general programming concepts. Let's see how `isUpper()` works under the hood.
 
-## isUpcase
+## isUpper()
 
 The implementation is suspiciously short: 
 
@@ -60,19 +60,18 @@ func IsUpper(r rune) bool {
 }
 ```
 
-We will focus on understanding line 3, in depth.
+We will focus on understanding line 3:
 
 ```Go
 return properties[uint8(r)] & pLmask == pLu
 ```
 
-We're accessing an array called `properties` with an 8-bit integer index, derived from the rune, have some kind of a bitmask, and `pLu` whatever that is.
-Let's address these one by one.
+We're accessing an array called `properties` with an 8-bit integer index, derived from the rune (code point), have some kind of a mask, and `pLu` whatever that is. Making sense of both sides of the equality check is up next.
 
 
 #### Flags and bitmasks
 
-If we look up the definition of `pLmask` ((src/unicode/graphic.go)[https://golang.org/src/unicode/graphic.go#8]), the first reaction might be to switch to the YouTube tab you have sitting next to
+If we look up the definition of `pLmask` ((src/unicode/graphic.go)[https://golang.org/src/unicode/graphic.go#8]), your first reaction might be to switch to the YouTube tab you have sitting next to
 the current one, but let's fight that urge and see what we have here. 
 
 ```
@@ -124,7 +123,9 @@ vacationCriteria = slipperyDeck | onboardPool # which is equal to: 0001 | 0010 =
 ```
 
 Flags are combined with the logical `OR` operation, represented with `|`. Also our `vacationCriteria` is what is called a bitmask. We use bitmasks, to see if a flag is set or not, by using the logical `AND` (`&`) operation.
-We found a potential ship. Let's check if it fits our needs:
+Often, this is called `extracting the flag`.
+
+Now, we found've a potential ship. Let's check if it fits our needs:
 
 ```
 ship = 15 # binary: 1111, pretty flashed out ship
@@ -133,8 +134,8 @@ packBags() if (ship & vacationCriteria) # 1111 & 0011 = 0011, which is 'true' so
 
 Conveniently, it also has a `captainOnBoard` and `freeSnacks`.
 
-When defining the flags, to spare our brain cycles from moving the binary `1` without clashing with other flags, we use a bitwise left shift `<<`. It does exactly we've done above. Combined with `iota` (which auto-increments with each line),
-we always define a variable which exactly avoids clashing with the previous one. In other words, with each line, the `1` is always one position further from the end than in the previous line.
+When defining the flags, to conserve our brain cycles from moving the binary `1` without clashing with other flags, we use a bitwise left shift `<<`. It does exactly we've done above when we defined the set of flags.
+Combined with `iota` (which auto-increments with each line), we always get a new variable, which exactly avoids clashing with the previous one. In other words, with each new line, the `1` in the binary representation of the value, is always one position further from the end than in the previous line.
 (An interesting property of this operation is that the end result of `x << y` can be calculated with `x * 2^y`.)
 
 Back to the flag definitions in `unicode/graphic.go`.
@@ -149,16 +150,16 @@ const (
   pLmask = pLu | pLl  //                     => 01100000 (32 + 64 = 96)
 ```
 
-And to make sense of the variable namings: the capital letter refers to Unicode categories: Letter, Character, Space, Other.
-The ending lowercase letter is, as you probably already guessed, referring to `lowercase` or `uppercase`.
+At this point, we're masters of this snippet.
+To make sense of the variable names here: the capital letter refers to Unicode categories: Letter, Character, Space, Other. The ending lowercase letter is, as you probably already guessed, referring to `lowercase` or `uppercase`.
 
-So `pLmask` is a mask, which has the uppercase and lowercase flags set to true. By applying a bitwise `&` and a character's properties,
+So `pLmask` is a bitmask, which has the uppercase and lowercase flags set to true. By applying a bitwise `&` and a character's `properties`,
 we can check if the character has either the lowercase or uppercase flag set.
 
 
-### Decyphering our line of interest
+### Making sense of it all
 
-We're now armed to decrypt the line from which we started, in 3 quick strokes.
+We're now armed to decypher the line from which we started, in 3 quick strokes.
 
 ```
 properties[r] & pLmask == pLu
@@ -199,12 +200,10 @@ Again, `(pLu | pp)` is derived from step 1, and it's the value of `properties[ui
 ((pLu | pp) & pLmask) == pLu // 010000000 == 010000000, true
 ```
 
-go playground
-
-Now we can answer the question: what is an uppercase letter in Go?
+Now we can answer the question: is the letter A uppercase?
 
 ```
-A letter which has the 'pLu' flag set, is an uppercase letter.
+If a letter has the 'pLu' flag set, it is an uppercase letter.
 ```
 
 ---
