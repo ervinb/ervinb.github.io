@@ -31,7 +31,7 @@ to be a good refresher about some basics, which often get overlooked or are take
 ## Understanding the problem
 
 Let me throw in a couple of words, and see how many of them we know, and how many of them we think we know: ASCII, ANSI, Unicode, encoding, UTF8, UTF16, code point, rune. I will give a brief description below,
-but reading Joel's article is definitely a better way to learn about them:
+but reading [Joel's article](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/) is definitely a better way to learn about them:
 
 - ASCII: a set of 128 characters, consisting of the English alphabet, control characters, numbers, punctation marks. A character maps directly to a value in memory: `F -> 01000110 (70)`. Uses 1 byte (8 bits), so this leaves 128 bites up for grabs. This is where ANSI comes in.
 - ANSI: a set of 256 characters, where the first 128 are from ASCII, and the second part was used for special characters like `ő` and `Þ`. As you might imagine, there are more than 128 characters other than English ones,
