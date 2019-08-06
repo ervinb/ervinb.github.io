@@ -19,45 +19,32 @@ func camelCount(in string) int {
 }
 ```
 
-... but as regexes, exiting Vim, and character encodings [link to SO dev post] are often a weak point of
+... but as regexes, exiting Vim, and [character encoding][joelunicode] are often a weak point of
 many of us, I've decided to dig deeper, and see how Go implements `IsUpper`. It turned out
 to be a good refresher about some basics, which often get overlooked or are taken for granted.
 
 ### Understanding the problem
 
-Let me throw in a couple of words, and see which we know and which we think we know: ASCII, ANSI, UTF8, UTF16, code point, runes.
+Let me throw in a couple of words, and see how many of them we know, and how many of them we think we know: ASCII, ANSI, Unicode, encoding, UTF8, UTF16, code point, rune. I will give a brief description below,
+but reading Joel's article is definitely a better way to learn about them:
 
-<nugget>
-Encoding tldr;
+- ASCII: a set of 128 characters, consisting of the English alphabet, control characters, numbers, punctation marks. A character maps directly to a value in memory: `F -> 01000110 (70)`. Uses 1 byte (8 bits), so this leaves 128 bites up for grabs. This is where ANSI comes in.
+- ANSI: a set of 256 characters, where the first 128 are from ASCII, and the second part was used for special characters like `ő` and `Þ`. As you might imagine, there are more than 128 characters other than English ones,
+so the upper 128 slots were divided into code pages (Arabic, Greek, etc.).
+- Unicode: a successful attempt to unify all possible characters in a single character set. The code `U+0048` points to letter `H` - we call this a `code point`. This is then encoded to memory: `H -> U+0048 -utf8-> 110000 (48)`.
+- encoding: storing a code point in memory. There are hundreds of types, but most of them can represent only a portion of the Unicode character set. This is where UTF-8 comes in.
+- UTF-8: an encoding format for the *whole* Unicode character set, which stores the first 127 characters in 1 byte (8 bits). This makes it compatible with ASCII and ANSI up to the first 127 characters. Characters above this
+are stored in 2 to 6 bytes.
 
-- ASCII is a character set
-# ASCII: 0:32[special char] - 33:128 [a-z,A-Z letters] - 129:255 [code pages: Greek, Esperanto, etc.]
-
-# decimal: 137 = 1×10^2+3×10^1+7×10^0 = 100+30+7
-# hex: 3B = 3×16^1+11×16^0 = 48+11 = 5910
-# https://www.rapidtables.com/convert/number/decimal-to-hex.html
-
-# Unicode: platonic 'A' -> code point: U+0041 -> encode to store in memory: UTF8
-#   UTF8: store the first 128 characters in 1 byte = ASCII, 
-
-# 1 hex digit represents half-a-byte(nibble): a base 16 digit can represent 0-15d which in binary can be described with 4 bits (half a byte) 2^4
-
-A string is a sequence of bytes. Each byte represents a Unicode [code point](https://en.wikipedia.org/wiki/Code_point), which is a mapping of a single value to a character. Golang's `rune` type is another way of saying `int32`. The type is used to point to Unicode code points: [41][unicodea] in `41 -> 'A'` is a rune.
-
-
-All these characters on your screen are defined in the Unicode table, and are encoded in UTF-8. Each character has its decimal representation, along with Hex or
-any other format you fancy.
-
-The upper case "A" is for example represented with a decimal 41 in the table; where lowercase "A" is at 61. So, a question arises, is there a function (like adding/subtracting 20)
+Back to the task at hand of checking if a character is upper case. "A" is for example encoded to the decimal 41, where lowercase "a" is encoded to 61. So, a question arises, is there a function (like adding/subtracting 20)
 which can easily change the character's case? The answer is more simple, and more complicated at the same time.
 
-We don't need any fancy algorithm because everything is hardcoded in the programming language. We have a huge table of hardcoded mappings, from which we get what we need, and continue with our day.
+We don't need any fancy formula, because everything is hardcoded into programming language. There's a huge hardcoded table of characters, from which we get what we need, and continue with our day.
 
-The "get what we need" is where it gets interesting.
-
+The "get what we need" is where it gets interesting. Let's dive into the internals of Go.
 
 I will break down the code examples as much as I can, to assure a firm base for understanding the implementation. This will
-include some Golang and general programming concepts.
+include some Go and general programming concepts. Let's see how `isUpcase()` works under the hood.
 
 ## isUpcase
 
@@ -79,7 +66,7 @@ We will focus on understanding line 3, in depth.
 return properties[uint8(r)] & pLmask == pLu
 ```
 
-We're accessing an array called `properties` with an 8-bit integer index derived from the character, have some kind of a bitmask, and `pLu` whatever that is.
+We're accessing an array called `properties` with an 8-bit integer index, derived from the rune, have some kind of a bitmask, and `pLu` whatever that is.
 Let's address these one by one.
 
 
@@ -98,7 +85,7 @@ const (
   pLmask = pLu | pLl
 ```
 
-Yes, this is how Pandora's box looks like. If you're fluent in Go and bitwise operations, switch to that YouTube tab until the rest of us finish here.
+Yes, this is how the Pandora's box looks like. If you're fluent in Go and bitwise operations, switch to that YouTube tab until the rest of us finish here.
 
 *Q*: Why aren't all the elements defined, if these are constants?
 
@@ -116,8 +103,10 @@ const (
 
 *Q*: _tries to skim over '_ = 1 << iota'_
 
-*A*: The elefant at the top, known as a left bitwise shift, is one of the rarer operations you'll see in your everyday life, and it's like seeing a full kitchen sink - you reflexively look away.
-Bitwise operations are usually used to represent flags. Pseudo code, describing ships and a vacation comming up; we've arrived to 0's and 1's, but it's fun I promise. 
+*A*: The elephant at the top, known as a left bitwise shift, is one of the rarer operations you'll see in your everyday life, and it's like seeing a full kitchen sink - you reflexively look away.
+Bitwise operations are usually used to represent flags. Pseudo code, describing ships and a vacation coming up; we've arrived to 0's and 1's, but it's fun I promise. 
+
+Let's take the following flags, to help us define our `vacationCriteria`:
 
 ```
 slipperyDeck   = 1 # binary: 0001
@@ -127,27 +116,26 @@ freeSnacks     = 8 # binary: 1000
 
 ```
 
-The values are not arbitary: `1` in the binary representation of the flag is always on a different place, and it never clashes with another flag.
-If we were looking for a ship with a swimming pool, and we're into slippery decks, we combine `onboardPool` with `slipperyDeck`:
+The values are not arbitrary: `1` in the binary representation of the flag is always on a different place, and it never clashes with another flag.
+If we were looking for a ship with a swimming pool, and we're into slippery decks, we combine `onboardPool` and `slipperyDeck`:
 
 ```
-vacationCriteria = slipperyDeck | onboardPool # 0001 | 0010 = 0011
+vacationCriteria = slipperyDeck | onboardPool # which is equal to: 0001 | 0010 = 0011
 ```
 
-Flags are combined with the logical `OR` operation, represented with `|`. Also our `vacationCriteria` is what is called a bitmask. We use bitmasks, to see if a flag is set or not. Applying the `AND` (`&`) operation to a mask and the flag
-tells us if the flag is active or not in that mask.
-
-For example, we found a potential ship. Let's check if it fits our needs:
+Flags are combined with the logical `OR` operation, represented with `|`. Also our `vacationCriteria` is what is called a bitmask. We use bitmasks, to see if a flag is set or not, by using the logical `AND` (`&`) operation.
+We found a potential ship. Let's check if it fits our needs:
 
 ```
-ship = 15 # binary: 1111
-packBags if (ship & vacationCriteria) # 1111 & 0011 = 0011, which is 'true' => packBags
+ship = 15 # binary: 1111, pretty flashed out ship
+packBags() if (ship & vacationCriteria) # 1111 & 0011 = 0011, which is 'true' so let's packBags()
 ```
 
-It does. Conveniently, it also has a `captainOnBoard` and `freeSnacks`.
+Conveniently, it also has a `captainOnBoard` and `freeSnacks`.
 
-When defining the flags, to spare our brain cycles from moving the binary `1` without clashing with other flags, we use bitwise left shift `<<`. It does exactly we've done above.
-An interesting property of this operation is that the end result of `x << y` can be calculated with `x * 2^y`.
+When defining the flags, to spare our brain cycles from moving the binary `1` without clashing with other flags, we use a bitwise left shift `<<`. It does exactly we've done above. Combined with `iota` (which auto-increments with each line),
+we always define a variable which exactly avoids clashing with the previous one. In other words, with each line, the `1` is always one position further from the end than in the previous line.
+(An interesting property of this operation is that the end result of `x << y` can be calculated with `x * 2^y`.)
 
 Back to the flag definitions in `unicode/graphic.go`.
 
@@ -156,7 +144,7 @@ const (
   _ = 1 << iota       // 1 << 0 = 00001 << 0 => 00000001 (1 * 2^0 = 1)
   ...                 // four other flags defined here
   pLl                 // 1 << 5 = 00001 << 5 => 00100000 (1 * 2^5 = 32)
-  pLu                 // 1 << 6 = 00001 << 5 => 01000000 (1 * 2^6 = 64)
+  pLu                 // 1 << 6 = 00001 << 6 => 01000000 (1 * 2^6 = 64)
   ...
   pLmask = pLu | pLl  //                     => 01100000 (32 + 64 = 96)
 ```
@@ -195,7 +183,7 @@ Conveniently, the position corresponds to the character's number representation 
 properties[uint("A")] = pLu | pp // 01000000 | 10000000 => 11000000 
 ```
 
-So based on the above, we know that the capital "A" is printable and that it's uppercase. We will use the value `(pLu | pp)` below, when refering to this `properties` element.
+So based on the above, we know that the capital "A" is printable and that it's uppercase. In the sections below, instead of `properties[]`, we will write out `(pLu | pp)`, so that the logical operations are more clear.
 
 2. The next thing in line is `& pLmask`. With it we check if the value of the given `properties` element, has the `pLmask` flags activated, like we checked if a ship is suitable for our vacation.
 
@@ -230,3 +218,4 @@ Yay an uppercase A!
 [hackerrank]: https://www.hackerrank.com/
 [playcounter]: https://play.golang.org/p/s6XtaXjwGg2
 [unicodea]: https://unicode.org/cldr/utility/character.jsp?a=41&B1=Show 
+[joelunicode]: https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
