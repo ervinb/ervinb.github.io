@@ -52,7 +52,7 @@ include some Go and general programming concepts. Let's see how `isUpper()` work
 
 ## Looking under isUpper()
 
-The implementation is suspiciously short: 
+The [implementation](https://golang.org/src/unicode/letter.go#L183) is suspiciously short: 
 
 
 ```golang
