@@ -76,7 +76,7 @@ We're accessing an array called `properties` with an 8-bit integer index, derive
 
 ## Flags and bitmasks
 
-If we look up the definition of `pLmask` ((src/unicode/graphic.go)[https://golang.org/src/unicode/graphic.go#8]), your first reaction might be to switch to the YouTube tab you have sitting next to
+If we look up the definition of `pLmask` ([src/unicode/graphic.go](https://golang.org/src/unicode/graphic.go#8)), your first reaction might be to switch to the YouTube tab you have sitting next to
 the current one, but let's fight that urge and see what we have here. 
 
 ```golang
@@ -87,14 +87,15 @@ const (
   pLu
   ...
   pLmask = pLu | pLl
+)
 ```
 
 Yes, this is how the Pandora's box looks like. If you're fluent in Go and bitwise operations, switch to that YouTube tab until the rest of us finish here.
 
-*Q*: Why aren't all the elements defined, if these are constants?
+**Q**: Why aren't all the elements defined, if these are constants?
 
-*A*: They are. The missing type and value just means to repeat the line above as long as it doesn't encounter an equals sign. [link to iota]
-A property of Go's `iota` is to auto-increment as it moves through the list with each new line. 
+**A**: They are. The missing type and value just means to repeat the line above as long as it doesn't encounter an equals sign.
+A property of Go's [iota](https://github.com/golang/go/wiki/Iota) is to auto-increment as it moves through the list with each new line. 
 
 ```golang
 const (
@@ -105,9 +106,9 @@ const (
 ```
 
 
-*Q*: _tries to skim over '_ = 1 << iota'_
+**Q**: _tries to skim over `_ = 1 << iota`_
 
-*A*: The elephant at the top, known as a left bitwise shift, is one of the rarer operations you'll see in your everyday life, and it's like seeing a full kitchen sink - you reflexively look away.
+**A**: The elephant at the top, known as a left bitwise shift, is one of the rarer operations you'll see in your everyday life, and it's like seeing a full kitchen sink - you reflexively look away.
 Bitwise operations are usually used to represent flags. Pseudo code, describing ships and a vacation coming up; we've arrived to 0's and 1's, but it's fun I promise. 
 
 Let's take the following flags, to help us define our `vacationCriteria`:
@@ -120,7 +121,7 @@ freeSnacks     = 8 # binary: 1000
 
 ```
 
-The values are not arbitrary: `1` in the binary representation of the flag is always on a different place, and it never clashes with another flag.
+The values are not arbitrary: notice that the `1` in the binary representation of the flag is always on a different place, and it never clashes with another one.
 If we were looking for a ship with a swimming pool, and we're into slippery decks, we combine `onboardPool` and `slipperyDeck`:
 
 ```golang
@@ -141,7 +142,8 @@ Conveniently, it also has a `captainOnBoard` and `freeSnacks`.
 
 When defining the flags, to conserve our brain cycles from moving the binary `1` without clashing with other flags, we use a bitwise left shift `<<`. It does exactly we've done above when we defined the set of flags.
 Combined with `iota` (which auto-increments with each line), we always get a new variable, which exactly avoids clashing with the previous one. In other words, with each new line, the `1` in the binary representation of the value, is always one position further from the end than in the previous line.
-(An interesting property of this operation is that the end result of `x << y` can be calculated with `x * 2^y`.)
+
+(An interesting property of the left bitwise shift operation is that the end result of `x << y` can be calculated with `x * 2^y`.)
 
 Back to the flag definitions in `unicode/graphic.go`.
 
@@ -171,7 +173,7 @@ properties[r] & pLmask == pLu
 
 ```
 
-1. `properties` is an array which stores flags, like our `vacationCriteria` from before. For example at position 41, you'll find:
+1. `properties` is an array which stores flags, like our `vacationCriteria` from before. For example [at index 41](https://godoc-test.golang.org/src/unicode/tables.go), you'll find:
 
     ```golang
     properties = [MaxLatin1 + 1]uint8 {
