@@ -5,10 +5,10 @@ tags: go golang
 key: go-upcase
 ---
 
-I'm slowly picking up Go, and ran across a [Hacker Rank][hackerrank] task: count the number of uppercase letters, in an
+I'm slowly picking up Go, and ran across a [Hacker Rank](https://www.hackerrank.com/) task: count the number of uppercase letters, in an
 input, which is written in CamelCase. For example, thisStringWouldYield 3.
 
-It's easy as it sounds: you go through each character and increase a counter if it's in uppercase. ([playground][playcounter])
+It's easy as it sounds: you go through each character and increase a counter if it's in uppercase. ([playground](https://play.golang.org/p/s6XtaXjwGg2))
 
 ```golang
 func camelCount(in string) int {
@@ -24,7 +24,7 @@ func camelCount(in string) int {
 }
 ```
 
-... but as regexes, exiting Vim, and [character encoding][joelunicode] are often a weak point of
+... but as regexes, exiting Vim, and [character encoding](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/) are often a weak point of
 many of us, I've decided to dig deeper, and see how Go implements `IsUpper`. It turned out
 to be a good refresher about some basics, which often get overlooked or are taken for granted.
 
@@ -213,8 +213,3 @@ properties[r] & pLmask == pLu
     ```
 
 ---
-
-[hackerrank]: https://www.hackerrank.com/
-[playcounter]: https://play.golang.org/p/s6XtaXjwGg2
-[unicodea]: https://unicode.org/cldr/utility/character.jsp?a=41&B1=Show 
-[joelunicode]: https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
