@@ -143,7 +143,9 @@ Conveniently, it also has a `captainOnBoard` and `freeSnacks`.
 When defining the flags, to conserve our brain cycles from moving the binary `1` without clashing with other flags, we use a bitwise left shift `<<`. It does exactly we've done above when we defined the set of flags.
 Combined with `iota` (which auto-increments with each line), we always get a new variable, which exactly avoids clashing with the previous one. In other words, with each new line, the `1` in the binary representation of the value, is always one position further from the end than in the previous line.
 
-(An interesting property of the left bitwise shift operation is that the end result of `x << y` can be calculated with `x * 2^y`.)
+```
+An interesting property of the left bitwise shift operation is that the end result of `x << y` can be calculated with `x * 2^y`.
+```
 
 Back to the flag definitions in `unicode/graphic.go`.
 
