@@ -1,11 +1,16 @@
-# Checking a character's case in Go, the long way around (0's and 1's included)
+---
+layout: article
+title: Checking a character's case in Go, the long way around (0's and 1's included)
+tags: go golang
+key: go-upcase
+---
 
 I'm slowly picking up Go, and ran across a [Hacker Rank][hackerrank] task: count the number of uppercase letters, in an
 input, which is written in CamelCase. For example, thisStringWouldYield 3.
 
 It's easy as it sounds: you go through each character and increase a counter if it's in uppercase. ([playground][playcounter])
 
-```Go
+```golang
 func camelCount(in string) int {
 	counter := 0
 
@@ -23,7 +28,7 @@ func camelCount(in string) int {
 many of us, I've decided to dig deeper, and see how Go implements `IsUpper`. It turned out
 to be a good refresher about some basics, which often get overlooked or are taken for granted.
 
-### Understanding the problem
+## Understanding the problem
 
 Let me throw in a couple of words, and see how many of them we know, and how many of them we think we know: ASCII, ANSI, Unicode, encoding, UTF8, UTF16, code point, rune. I will give a brief description below,
 but reading Joel's article is definitely a better way to learn about them:
@@ -46,11 +51,12 @@ The "get what we need" is where it gets interesting. Let's dive into the interna
 I will break down the code examples as much as I can, to assure a firm base for understanding the implementation. This will
 include some Go and general programming concepts. Let's see how `isUpper()` works under the hood.
 
-## isUpper()
+## Looking under isUpper()
 
 The implementation is suspiciously short: 
 
-```Go
+
+```golang
 func IsUpper(r rune) bool {
 	if uint32(r) <= MaxLatin1 {
 		return properties[uint8(r)] & pLmask == pLu
@@ -62,7 +68,7 @@ func IsUpper(r rune) bool {
 
 We will focus on understanding line 3:
 
-```Go
+```golang
 return properties[uint8(r)] & pLmask == pLu
 ```
 
@@ -74,7 +80,7 @@ We're accessing an array called `properties` with an 8-bit integer index, derive
 If we look up the definition of `pLmask` ((src/unicode/graphic.go)[https://golang.org/src/unicode/graphic.go#8]), your first reaction might be to switch to the YouTube tab you have sitting next to
 the current one, but let's fight that urge and see what we have here. 
 
-```
+```golang
 const (
   _ = 1 << iota
   ...
@@ -91,7 +97,7 @@ Yes, this is how the Pandora's box looks like. If you're fluent in Go and bitwis
 *A*: They are. The missing type and value just means to repeat the line above as long as it doesn't encounter an equals sign. [link to iota]
 A property of Go's `iota` is to auto-increment as it moves through the list with each new line. 
 
-```Go
+```golang
 const (
   a = 0 + iota   # => 0 + 0 = 0
   b              # => 0 + 1 = 1
@@ -107,7 +113,7 @@ Bitwise operations are usually used to represent flags. Pseudo code, describing 
 
 Let's take the following flags, to help us define our `vacationCriteria`:
 
-```
+```golang
 slipperyDeck   = 1 # binary: 0001
 onboardPool    = 2 # binary: 0010
 captainOnBoard = 4 # binary: 0100
@@ -118,7 +124,7 @@ freeSnacks     = 8 # binary: 1000
 The values are not arbitrary: `1` in the binary representation of the flag is always on a different place, and it never clashes with another flag.
 If we were looking for a ship with a swimming pool, and we're into slippery decks, we combine `onboardPool` and `slipperyDeck`:
 
-```
+```golang
 vacationCriteria = slipperyDeck | onboardPool # which is equal to: 0001 | 0010 = 0011
 ```
 
@@ -127,7 +133,7 @@ Often, this is called `extracting the flag`.
 
 Now, we found've a potential ship. Let's check if it fits our needs:
 
-```
+```golang
 ship = 15 # binary: 1111, pretty flashed out ship
 packBags() if (ship & vacationCriteria) # 1111 & 0011 = 0011, which is 'true' so let's packBags()
 ```
@@ -140,7 +146,7 @@ Combined with `iota` (which auto-increments with each line), we always get a new
 
 Back to the flag definitions in `unicode/graphic.go`.
 
-```
+```golang
 const (
   _ = 1 << iota       // 1 << 0 = 00001 << 0 => 00000001 (1 * 2^0 = 1)
   ...                 // four other flags defined here
@@ -157,62 +163,56 @@ So `pLmask` is a bitmask, which has the uppercase and lowercase flags set to tru
 we can check if the character has either the lowercase or uppercase flag set.
 
 
-### Making sense of it all
+## Making sense of it all
 
 We're now armed to decypher the line from which we started, in 3 quick strokes.
 
-```
+```golang
 properties[r] & pLmask == pLu
 
 ```
 
 1. `properties` is an array which stores flags, like our `vacationCriteria` from before. For example at position 41, you'll find:
-<TODO: filename>
 
-```
-properties = [MaxLatin1 + 1]uint8 {
-  ...
-	0x41: pLu | pp, // 'A'
-  ...
-}
-```
+    ```golang
+    properties = [MaxLatin1 + 1]uint8 {
+      ...
+      0x41: pLu | pp, // 'A'
+      ...
+    }
+    ```
 
-Conveniently, the position corresponds to the character's number representation in the Unicode table. With `properties[uint(A)]` we get the value of the `pLu | pp` flags.
-`pp` means "printable" and it doesn't interfere with our check for `pLu`, as it's not present in `pLmask`.
+    Conveniently, the position corresponds to the character's number representation in the Unicode table. With `properties[uint(A)]` we get the value of the `pLu | pp` flags.
+    `pp` means "printable" and it doesn't interfere with our check for `pLu`, as it's not present in `pLmask`.
 
-```
-properties[uint("A")] = pLu | pp // 01000000 | 10000000 => 11000000 
-```
 
-So based on the above, we know that the capital "A" is printable and that it's uppercase. In the sections below, instead of `properties[]`, we will write out `(pLu | pp)`, so that the logical operations are more clear.
+    ```golang
+    properties[uint("A")] = pLu | pp // 01000000 | 10000000 => 11000000 
+    ```
+
+    So based on the above, we know that the capital "A" is printable and that it's uppercase. In the sections below, instead of `properties[]`, we will write out `(pLu | pp)`, so that the logical operations are more clear.
 
 2. The next thing in line is `& pLmask`. With it we check if the value of the given `properties` element, has the `pLmask` flags activated, like we checked if a ship is suitable for our vacation.
 
-```
-(pLu | pp) & pLmask // 11000000 & 01100000 => 010000000
-```
+    ```golang
+    (pLu | pp) & pLmask // 11000000 & 01100000 => 010000000
+    ```
 
-Again, `(pLu | pp)` is derived from step 1, and it's the value of `properties[uint("A")]`.
+    Again, `(pLu | pp)` is derived from step 1, and it's the value of `properties[uint("A")]`.
 
 3. Lastly, we check if the extracted value is exactly `pLu` ie. is the character is exactly upper case. It can't be `pLu` and `pLl` at the same time. That would make a strange letter.
 
-```
-((pLu | pp) & pLmask) == pLu // 010000000 == 010000000, true
-```
+    ```golang
+    ((pLu | pp) & pLmask) == pLu // 010000000 == 010000000, true
+    ```
 
-Now we can answer the question: is the letter A uppercase?
+    Now we can answer the question: is the letter A uppercase?
 
-```
-If a letter has the 'pLu' flag set, it is an uppercase letter.
-```
+    ```
+    If a letter has the 'pLu' flag set, it is an uppercase letter.
+    ```
 
 ---
-
-### End
-
-"A"
-
-Yay an uppercase A!
 
 [hackerrank]: https://www.hackerrank.com/
 [playcounter]: https://play.golang.org/p/s6XtaXjwGg2
