@@ -75,7 +75,7 @@ return properties[uint8(r)] & pLmask == pLu
 We're accessing an array called `properties` with an 8-bit integer index, derived from the rune (code point), have some kind of a mask, and `pLu` whatever that is. Making sense of both sides of the equality check is up next.
 
 
-#### Flags and bitmasks
+## Flags and bitmasks
 
 If we look up the definition of `pLmask` ((src/unicode/graphic.go)[https://golang.org/src/unicode/graphic.go#8]), your first reaction might be to switch to the YouTube tab you have sitting next to
 the current one, but let's fight that urge and see what we have here. 
