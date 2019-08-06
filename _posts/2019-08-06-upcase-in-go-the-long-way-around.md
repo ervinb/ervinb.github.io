@@ -41,8 +41,7 @@ so the upper 128 slots were divided into code pages (Arabic, Greek, etc.).
 - UTF-8: an encoding format for the *whole* Unicode character set, which stores the first 127 characters in 1 byte (8 bits). This makes it compatible with ASCII and ANSI up to the first 127 characters. Characters above this
 are stored in 2 to 6 bytes.
 
-Back to the task at hand of checking if a character is upper case. "A" is for example encoded to the decimal 41, where lowercase "a" is encoded to 61. So, a question arises, is there a function (like adding/subtracting 20)
-which can easily change the character's case? The answer is more simple, and more complicated at the same time.
+Back to the task at hand of checking if a character is upper case. "A" is for example encoded to the decimal 41, where lowercase "a" is encoded to 61. At a first glance, it seems like there's a formula of some sorts to determine the character's case. The answer is more simple, and more complicated at the same time.
 
 We don't need any fancy formula, because everything is hardcoded into programming language. There's a huge hardcoded table of characters, from which we get what we need, and continue with our day.
 
