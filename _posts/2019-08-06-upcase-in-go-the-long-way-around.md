@@ -204,7 +204,7 @@ properties[r] & pLmask == pLu
 
     Again, `(pLu | pp)` is derived from step 1, and it's the value of `properties[uint("A")]`.
 
-3. Lastly, we check if the extracted value is exactly `pLu` ie. is the character is exactly upper case. It can't be `pLu` and `pLl` at the same time. That would make a strange letter.
+3. Lastly, we check if the extracted value is exactly `pLu` ie. is the character exactly upcase. It can't be `pLu` and `pLl` at the same time. That would make a strange letter.
 
     ```golang
     ((pLu | pp) & pLmask) == pLu // 010000000 == 010000000, true
