@@ -157,6 +157,7 @@ const (
   pLu                 // 1 << 6 = 00001 << 6 => 01000000 (1 * 2^6 = 64)
   ...
   pLmask = pLu | pLl  //                     => 01100000 (32 + 64 = 96)
+)
 ```
 
 At this point, we're masters of this snippet.
