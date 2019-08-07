@@ -12,14 +12,14 @@ It's easy as it sounds: you go through each character and increase a counter if 
 
 ```golang
 func camelCount(in string) int {
-	counter := 0
+  counter := 0
 
-	for _, ch := range in {
-	  if (unicode.IsUpper(ch)){
-	    counter++
-	  }
-	}
-	
+  for _, ch := range in {
+    if (unicode.IsUpper(ch)){
+      counter++
+    }
+  }
+  
   return counter
 }
 ```
@@ -57,11 +57,11 @@ The [implementation](https://golang.org/src/unicode/letter.go#L183) is suspiciou
 
 ```golang
 func IsUpper(r rune) bool {
-	if uint32(r) <= MaxLatin1 {
-		return properties[uint8(r)] & pLmask == pLu
-	}
+  if uint32(r) <= MaxLatin1 {
+    return properties[uint8(r)] & pLmask == pLu
+  }
 
-	return isExcludingLatin(Upper, r)
+  return isExcludingLatin(Upper, r)
 }
 ```
 
