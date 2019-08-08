@@ -76,17 +76,17 @@ We're accessing an array called `properties` with an 8-bit integer index, derive
 
 ## Flags and bitmasks
 
-If we look up the definition of `pLmask` ([src/unicode/graphic.go](https://golang.org/src/unicode/graphic.go#8)), your first reaction might be to switch to the YouTube tab you have sitting next to
+If we look up the definition of `pLmask` ([src/unicode/graphic.go](https://golang.org/src/unicode/graphic.go#L8)), your first reaction might be to switch to the YouTube tab you have sitting next to
 the current one, but let's fight that urge and see what we have here. 
 
 ```golang
 const (
-  _ = 1 << iota
+  pC    = 1 << iota  // a control character.
   ...
-  pLl
-  pLu
+  pLu                // an upper-case letter.
+  pLl                // a lower-case letter.
   ...
-  pLmask = pLu | pLl
+  pLmask = pLu | pLl // a letter that is neither upper nor lower case.
 )
 ```
 
@@ -106,7 +106,7 @@ const (
 ```
 
 
-**Q**: _tries to skim over `_ = 1 << iota`_
+**Q**: _tries to skim over `pC = 1 << iota`_
 
 **A**: The elephant at the top, known as a left bitwise shift, is one of the rarer operations you'll see in your everyday life, and it's like seeing a full kitchen sink - you reflexively look away.
 Bitwise operations are usually used to represent flags. Pseudo code, describing ships and a vacation coming up; we've arrived to 0's and 1's, but it's fun I promise. 
