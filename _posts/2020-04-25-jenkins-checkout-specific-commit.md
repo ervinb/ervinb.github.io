@@ -101,7 +101,7 @@ The issue is twofold:
 The first checkout, visible in the log, is defined in the Pipeline setup, and it's concerned with checking out the Jenkinsfile only
 and __only__ that. If you list the contents of the current directory before our own `checkout` call, you will find an empty directory.
 
-Actually, the second run where we used the previous commit from `master` worked because the respoitory was fully checked out in the
+Actually, the second run where we used the previous commit from `master` worked because the repository was fully checked out in the
 initial job, when `commit_sha` wasn't defined and `checkout(scm)` ran. This made the state 'dirty' and the subsequent job
 knew about that commit.
 
@@ -154,7 +154,7 @@ Like in this case, the root cause is usually the user, but the plugin did a real
 At the end, everything did exactly what it said it would:
 - the main SCM configuration checked out the Jenkinsfile only, thus:
 ![script-from-scm]({{ site.url }}/assets/images/jenkins-commit/script-from-scm.png)
-- the Git plugin worked on a local, bare repository as the ommitted field doesn't end with `.git` because it's, well, empty
+- the Git plugin worked on a local, bare repository as the omitted field doesn't end with `.git` because it's, well, empty
 
 
 Things like this can be easily overlooked, especially because the code checkout part is usually done once and never touched again.
