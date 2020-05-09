@@ -3,17 +3,18 @@ layout: article
 title: About me
 ---
 
-Hi, I'm Ervin Barta, a dev/ops guy who worked on [SemaphoreCI][semaphore], a continuous
+Hi, I'm Ervin Barta, working as an SRE at adidas. Previously I did consulting and before that,
+I was a jack-of-all-trades-ops over at [SemaphoreCI][semaphore], a continuous
 integration and deployment service, developed by the fine people over at
-[Rendered Text][rt]. 
+[Rendered Text][rt].
 
-I was mostly responsible for managing and the development of the system, which uses
+There I was mostly responsible for managing and the development of the system, which uses
 different virtualization and container technologies ([KVM][kvm], [LXC][lxc],
 [Docker][docker]) to execute jobs related to continuous integration and deployment.
 I also wrote a few articles on [Semaphore Community][semaphore-community] and did
 technical support for the CI platform.
 
-These days, I do consulting with a focus on Go and Kubernetes.
+These days, I mostly do work around Kubernetes/Helm/Jenkins/Prometheus/Jsonnet and the like.
 
 In my free time, I like to fiddle with the nuts and bolts of everything which
 ticks or has >= 2 wheels. I'm passionate about running, motorcycles and
@@ -29,7 +30,7 @@ some of the tips here will save you from a few hair-pulling sessions.
 ### Contact me
 
 Find me on [Github][github] / [Twitter][Twitter] or shoot me a message to
-`ervin at clunkybyte.com`.
+`hi at ervinbarta.com`.
 
 [semaphore]: https://semaphoreci.com
 [rt]:http://renderedtext.com/
