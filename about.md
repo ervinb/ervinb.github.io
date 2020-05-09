@@ -3,9 +3,9 @@ layout: article
 title: About me
 ---
 
-Hi, I'm Ervin Barta, working as an SRE at adidas. Previously I did consulting and before that,
-I was a jack-of-all-trades-ops over at [SemaphoreCI][semaphore], a continuous
-integration and deployment service, developed by the fine people over at
+Hi, I'm Ervin Barta, working as an SRE at adidas. Previously I did consulting for [bestbytes.com][bestbytes] and before that,
+I was a jack-of-all-trades (dev/ops, infrastructure engineer, technical writing, L3 technical support lead, etc)
+guy over at [SemaphoreCI][semaphore], a continuous integration and deployment service, developed by the fine people over at
 [Rendered Text][rt].
 
 There I was mostly responsible for managing and the development of the system, which uses
@@ -40,3 +40,4 @@ Find me on [Github][github] / [Twitter][Twitter] or shoot me a message to
 [semaphore-community]: https://semaphoreci.com/author/ervin
 [github]: https://github.com/ervinb
 [twitter]: https://twitter.com/baer
+[bestbytes]: https://bestbytes.com
