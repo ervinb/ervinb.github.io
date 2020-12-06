@@ -15,10 +15,10 @@ Install the dependencies:
 $ brew install sops gnupg
 ```
 
-And run these 3 commands to convince yourself:
+And run these 3-ish commands to convince yourself:
 ```sh
 # Clone the example repository
-$ git clone myrepo
+$ git clone https://github.com/ervinb/sops-gpg-example.git
 $ cd sops-gpg-example
 
 # Import the encryption key
@@ -28,7 +28,7 @@ $ gpg --import <(keybase fs read /keybase/team/sopsgpgexample/pgp/key.asc)
 $ gpg --import <(curl -L https://gist.githubusercontent.com/ervinb/288c44a45cf2614a0684bea333b3aa36/raw/sops-gpg-example.asc)
 
 # Decrypt and open the file
-$ sops secrets/mysecret.dev.enc.yaml
+$ sops secrets/mysecrets.dev.enc.yaml
 ```
 
 Your day-to-day interaction with this would be only the last line. 
@@ -53,7 +53,7 @@ Start the stopwatch - we have 2 minutes.
    ```
    The key is created without a passphrase because of the `%no-protection` option. Otherwise a `Passphrase: <pass>` would be required.
 
-2. Create a sops configuration file with the key's fingeprint. This is the magic ingredient,
+2. Create a sops configuration file with the key's fingeprint. This is the ✨ magic ✨ ingredient,
 which makes the onboarding so frictionless.
    ```sh
    $ gpg --list-keys
@@ -74,7 +74,7 @@ which makes the onboarding so frictionless.
 
 3. Use `sops` to edit and create new secrets
 ```sh
-$ sops secrets/mysecret.dev.enc.yaml
+$ sops secrets/mysecrets.dev.enc.yaml
 ```
 
    Then it just a question of distributing the keys to the right people and/or environment.
@@ -111,7 +111,7 @@ sub   rsa2048 2020-12-06 [E]
 $ gpg --armor --export-secret-keys 7E6DC556C66C43D928A95EA3715A56B718EAF0B6 > key.asc
 ```
 
-`--armor` makes it so that the output is ASCII (`.asc`) formatted, and not in binary, which is the default.
+`--armor` makes it so that the output is ASCII (`.asc`) formatted, and not in binary (default).
 
 One of the most seamless ways to distribute keys and other sensitive files is Keybase.
 It has a low barrier of entry, and you can control the granularity of access with "teams".
