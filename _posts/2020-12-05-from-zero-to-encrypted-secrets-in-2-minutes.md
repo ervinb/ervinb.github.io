@@ -22,8 +22,8 @@ $ git clone https://github.com/ervinb/sops-gpg-example.git
 $ cd sops-gpg-example
 
 # Import the encryption key
-## The path is Keybase specific and it will work on any platform - no need to use your local filesystem path
-$ gpg --import <(keybase fs read /keybase/team/sopsgpgexample/pgp/key.asc)
+## The path is Keybase specific and it will work on any platform - no need to use your local filesystem path. Join the 'sopsgpg' team first.
+$ gpg --import <(keybase fs read /keybase/team/sopsgpg/pgp/key.asc)
 ## Or if you don't have Keybase set up yet
 $ gpg --import <(curl -L https://gist.githubusercontent.com/ervinb/288c44a45cf2614a0684bea333b3aa36/raw/sops-gpg-example.asc)
 
