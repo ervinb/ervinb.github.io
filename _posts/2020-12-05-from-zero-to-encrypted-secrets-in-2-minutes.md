@@ -22,10 +22,6 @@ $ git clone https://github.com/ervinb/sops-gpg-example.git
 $ cd sops-gpg-example
 
 # Import the encryption key
-## The path is Keybase specific and it will work on any platform - no need to use your local filesystem path.
-## Join the 'sopsgpg' team in Keybase first.
-$ gpg --import <(keybase fs read /keybase/team/sopsgpg/pgp/key.asc)
-## Or if you don't have Keybase set up yet
 $ gpg --import <(curl -L https://gist.githubusercontent.com/ervinb/288c44a45cf2614a0684bea333b3aa36/raw/sops-gpg-example.asc)
 
 # Decrypt and open the file
@@ -123,10 +119,18 @@ It also integrates nicely with the filesystem.
    $ brew install keybase
    ```
 2. Create an account
-3. Store the secret key under a team's folder
+3. Create a new team and store the secret key under the team's folder
 
-After that, you grab the universal path and import the key to anywhere with `gpg` installed.
+After that, you grab the universal path and import the key to anywhere with `gpg` installed. Your peers
+can also grab the key after they join your team.
 
+The command below imports the same PGP key we used at the beginning of the post. The `sopsgpg` team is open, so you can join if you want to test it out.
+
+```
+## The path is Keybase specific and it will work on any platform - no need to use your local filesystem path.
+## Join the 'sopsgpg' team in Keybase first.
+$ gpg --import <(keybase fs read /keybase/team/sopsgpg/pgp/key.asc)
+```
 
 ## Use it in your applications
 
