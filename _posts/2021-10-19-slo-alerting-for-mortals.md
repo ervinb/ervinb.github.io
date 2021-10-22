@@ -80,7 +80,7 @@ This magic multiplier is called the burn rate (or "tilting of the green line to 
 Here's the scenario:
 - 10 requests per 5 minutes is our traffic (constant)
 - 10% error rate for 10 minutes (1 request out of 10 will fail)
-- a snapshot of the state is taken every 5 minutes (`scrape_time` in Prometheus terms)
+- A snapshot of the state is taken every 5 minutes (`scrape_interval` in Prometheus terms). In the real world, you will probably have snapshots every 30 seconds or every minute. We're using 5 minutes here for easier calculation, and to be able to draw square error rate lines, instead of sloping ones.
 
 ![1h-graph](/assets/images/slo-alerting/1h-graph-err-rate.png)
 
@@ -88,26 +88,19 @@ An error rate of 10% in 2 subsequent snapshots (0m-5m, 5m-10m) is enough to trig
 
 ![1h-graph-calc](/assets/images/slo-alerting/1h-graph-err-rate-calculation.png)
 
-What immediately pops out here is the long running alert. It will fire for 55 minutes, even tough we're not constantly in an erronous state.
-
-
-With each 5 minute snapshot we are looking back at the past 1 hours. Based on the above calculation, if 2 snapshots are having a high error rate that's enough to trigger an alert.
+What immediately stands out here is the long running alert. It will be active for 55 minutes, even tough we're not constantly in an erronous state.
 
 ![1h-moving-window-smooth](https://imgur.com/q5CUnRk.gif)
 
 As long as both erronous snapshots are inside the window, the alert will be active. When one of them leaves, the error rate drops
 to 0.8% and the alert stops.
 
-In the real world, you will probably have snapshots (`scrape_interval`) every 30s or a minute. We're using 5 minutes here for easier calculation and
-to be able to draw square error rate lines, instead of sloping ones.
-
 
 ## Multi-window alerts
 
-One way to combat the long running alert is to introduce another, shorter time window. It will make sure to end the alert, not long after the error rate goes back to normal.
+One way to combat the long running alert is to introduce another, shorter time window. It will make sure to end the alert, not long after the error rate goes back to normal. A 5 minute time window with the same error rate as before does just that.
 
 ![1h5m-query](/assets/images/slo-alerting/1h5m-query.png)
-
 
 ![1h5m-graph](/assets/images/slo-alerting/1h5m-graph-err-rate.png)
 
@@ -115,7 +108,6 @@ The alert is active only when the snapshots with a high error rate are in both t
 
 ![1h5m-moving-window-smooth](https://i.imgur.com/2NFzF39.gif)
 
-If however there's a constant error rate, throughout the snapshots, of course the alert will be ongoing.
 With the addition of the shorter time window, we made sure that alert is matching reality more closely, i.e. it reacts only when there's an ongoing issue.
 
 These were the basics, the next level would be multi-level, multi-burn rate alert which are a bit out of the scope of this post, so refer to
