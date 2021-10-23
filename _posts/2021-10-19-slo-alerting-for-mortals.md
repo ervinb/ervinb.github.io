@@ -5,17 +5,16 @@ tags: sre
 key: slo-alerting
 ---
 
-I assume you're here with a spinning head from reading Google's SRE book/articles,
-or you just need a quick refresher about the SLO alerting math.
-
-I will keep the text to a minimum (there are [better places to get that](https://sre.google/workbook/alerting-on-slos/)), and mostly
-focus on visual representation of the basic ideas behind SLO-based alerts.
-
+This is an attempt to break down the concept of SLO alerting as much as possible.
+Step-by-step, each concept will be illustrated and occasionally animated.
 
 ## SLOs and SLIs
 
 Service level objective (SLO). It represents how reliably the service is delivering "value" to its users.
+
+
 Service level indicator (SLI). A measurement of a specific service metric. We're using SLIs and math to define an SLO.
+
 
 A 99.9% SLO per month means if 0.1% of requests fail, that's *acceptable*, and it will not cause panic around the globe.
 That allowed error rate is also known as the *error budget*.
@@ -27,15 +26,23 @@ We're ok with the fact that 1 in every 1K requests will fail.
 An SLI can be the error rate of the incoming requests.
 ![slo-vs-sli](/assets/images/slo-alerting/sli-slo-init.png)
 
+That 0.1% of wiggle room is the limit above we don't want to go - the error budget.
+
+![error-budget-timeline](/assets/images/slo-alerting/error-budget-timeline.png)
+
 
 ## Converting time
 
 Most of the math involved here is about converting various time units (i.e 1 month to hours)
-and checking the ratio between them (i.e. 1h is 0.14% of a month).
+and checking the ratio between them (i.e. 1h is 0.14% of a month). Then using those ratios
+with existing SLIs to come to an SLO condition.
 
 ![time-conversion](/assets/images/slo-alerting/time-conv.png)
 
 Time wise, a 0.1% error rate for a month means a 43 minute complete downtime.
+
+![slo-time](/assets/images/slo-alerting/metric-slo-timeline.png)
+
 
 
 ## Burn rate
@@ -53,26 +60,30 @@ That "tilting" is also called the *burn rate*.
 
 ## Defining the first alert
 
-As a start, we define the following alert condition.
+As a start, we define the following alert condition, which is identical to the SLO.
 
 ![initial-alert-condition](/assets/images/slo-alerting/slo-query-first.png)
 
-This translates to "if the green line starts tilting left: alert!"
+Keeping the graph above in mind, this translates to "if the green line starts tilting left: alert!"
 
-And it is fine until it starts to alert 19 times a day. The slightest increase of error rate will trigger an alert. If we have a constant
-error rate just above our threshold for an hour, we will burn through roughly 0.14% of the error budget.
-(1 hour is 0.14% of 1 month.)
+To reiterate on our timeline, the error budget spans out across the whole month. The alert we defined operates in an hour long time window.
+It follows that the 1 hour time window is of course not the whole month, but only 0.14% percent of it. At the error rate of 0.1% (our SLO), and during
+that 1 hour long time window, 0.14% of the budget is consumed.
+
+![slo-vs-sli](/assets/images/slo-alerting/metric-slo-sli-timeline.png)
 
 Not really worth to wake up someone over it.
 
-To improve on this, let's say we want 2% of our monthly error budget to be burned within an hour, before the alert fires.
-So the budget burn is currently 0.14% per hour but we want 2%, so we need to multiply our threshold with some number to reach this new target.
+Another issue is that the alert will be active for almost an hour. (we will revisit this a bit later)
 
-Dividing the target with the current value gives us the multiplier: `2%/0.14% = 14.3`
+To improve on this, instead of the 0.14% budget burn in an hour, the alert should have a higher threshold and aim at a 2% burn.
+We need to multiply our threshold with some number to reach this new target.
+
+Dividing the target value with the current one gives us the multiplier: `2%/0.14% = 14.3`
 
 ![alert-condition-multiplied](/assets/images/slo-alerting/slo-query-first-144.png)
 
-This magic multiplier is called the burn rate (or "tilting of the green line to the left" as we defined it a couple of lines above).
+This magic multiplier is actually the burn rate (or "tilting of the green line to the left" as we defined it a couple of lines above).
 
 
 # Simulating an alert
