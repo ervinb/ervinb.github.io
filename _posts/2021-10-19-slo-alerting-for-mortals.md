@@ -22,7 +22,7 @@ Service level objective (SLO). It represents how reliably the service is deliver
 Service level indicator (SLI). A measurement of a specific service metric. We're using SLIs and math to define an SLO.
 
 
-A 99.9% SLO per month means if 0.1% of requests fail, that's *acceptable*, and it will raise any fuss.
+A 99.9% SLO per month means if 0.1% of requests fail, that's *acceptable*, and it won't raise any fuss.
 
 ![slo-req-count](/assets/images/slo-alerting/slo-count-999.png)
 
@@ -126,7 +126,7 @@ after the second subsequent snapshot with an elevated error rate, as it needs 2 
 
 Both conditions have the same threshold of 1.4% (0.1% * 14.4); the difference is that the 5 minute one takes 10 samples into consideration, and the 1 hour one takes
 120 samples. A bad request has naturally a bigger impact on the smaller sample size than on the bigger one - 1 in 10 vs. 1 in 120. The smaller window
-is more jittery, where the longer one is slugish, but as they meat at the middle, the result is almost the best of both worlds: we have reasonable
+is more jittery, where the longer one is slugish, but as they meet at the middle, the result is almost the best of both worlds: we have reasonable
 sensitivity and decent reset time (i.e the alert stops when the coast is clear).
 
 The alert is active only when the snapshots with a high error rate are in both time windows - in our case this is true for 10 minutes.
