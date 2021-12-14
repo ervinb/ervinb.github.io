@@ -123,7 +123,7 @@ But in our setup we have:
 ```
 checkout([
   $class: 'GitSCM',
-  branches: [[name: params.name]]
+  branches: [[name: params.commit_sha]]
 ])
 ```
 
@@ -136,7 +136,7 @@ So the fix is:
 ```
 checkout([
   $class: 'GitSCM',
-  branches: [[name: params.name]],
+  branches: [[name: params.commit_sha]],
   userRemoteConfigs: scm.userRemoteConfigs
 ])
 ```
