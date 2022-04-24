@@ -42,7 +42,9 @@ Start the stopwatch - we have 2 minutes.
    ```sh
    $  gpg --batch --generate-key <<EOF
      %no-protection
-     Key-Type: default
+     Key-Type: DSA
+     Subkey-Type: ECDSA
+     Subkey-Curve: nistp256
      Subkey-Type: default
      Name-Real: Foo Bar
      Expire-Date: 0
